@@ -1,9 +1,23 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>Analysis Group:</strong>
   <%= @analysis_group.name %>
 </p>
+  <table>
+    <tr>
+      <th>OCLC Number</th>
+      <th>Interlibrary Loan Count</th>
+      <th>Overlap Group 1</th>
+    </tr>
+    <%- @analysis_group.monograph_holdings.each do |holding| %>
+    <tr>
+      <td><%= holding.oclc_number %></td>
+      <td><%= holding.interlibrary_loan_count %></td>
+      <td><%= holding.overlap_holdings_count %></td>
+    </tr>
+    <%- end %>
+  </table>
 
 <%= link_to 'Edit', edit_analysis_group_path(@analysis_group) %> |
 <%= link_to 'Back', analysis_groups_path %>
