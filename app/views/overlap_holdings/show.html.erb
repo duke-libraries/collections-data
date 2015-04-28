@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Oclc number:</strong>
+  <%= @overlap_holding.oclc_number %>
+</p>
+
+<p>
+  <strong>Shared by:</strong>
+  <%= @overlap_holding.shared_by %>
+</p>
+
+<%= link_to 'Edit', edit_overlap_holding_path(@overlap_holding) %> |
+<%= link_to 'Back', overlap_holdings_path %>

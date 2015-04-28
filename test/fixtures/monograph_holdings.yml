@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  oclc_number: 1
+  lc_number: MyString
+  title: MyString
+  author: MyString
+  publisher: MyString
+  price: 1.5
+  acquisition_modality: MyString
+
+two:
+  oclc_number: 1
+  lc_number: MyString
+  title: MyString
+  author: MyString
+  publisher: MyString
+  price: 1.5
+  acquisition_modality: MyString

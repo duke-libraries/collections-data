@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Oclc number:</strong>
+  <%= @monograph_holding.oclc_number %>
+</p>
+
+<p>
+  <strong>Lc number:</strong>
+  <%= @monograph_holding.lc_number %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @monograph_holding.title %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @monograph_holding.author %>
+</p>
+
+<p>
+  <strong>Publisher:</strong>
+  <%= @monograph_holding.publisher %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @monograph_holding.price %>
+</p>
+
+<p>
+  <strong>Acquisition modality:</strong>
+  <%= @monograph_holding.acquisition_modality %>
+</p>
+
+<%= link_to 'Edit', edit_monograph_holding_path(@monograph_holding) %> |
+<%= link_to 'Back', monograph_holdings_path %>

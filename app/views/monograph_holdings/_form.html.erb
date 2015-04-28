@@ -1,0 +1,45 @@
+<%= form_for(@monograph_holding) do |f| %>
+  <% if @monograph_holding.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@monograph_holding.errors.count, "error") %> prohibited this monograph_holding from being saved:</h2>
+
+      <ul>
+      <% @monograph_holding.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :oclc_number %><br>
+    <%= f.number_field :oclc_number %>
+  </div>
+  <div class="field">
+    <%= f.label :lc_number %><br>
+    <%= f.text_field :lc_number %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :author %><br>
+    <%= f.text_field :author %>
+  </div>
+  <div class="field">
+    <%= f.label :publisher %><br>
+    <%= f.text_field :publisher %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br>
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :acquisition_modality %><br>
+    <%= f.text_field :acquisition_modality %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

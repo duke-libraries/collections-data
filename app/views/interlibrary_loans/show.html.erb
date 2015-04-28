@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Oclc number:</strong>
+  <%= @interlibrary_loan.oclc_number %>
+</p>
+
+<p>
+  <strong>Request type:</strong>
+  <%= @interlibrary_loan.request_type %>
+</p>
+
+<p>
+  <strong>Transaction date:</strong>
+  <%= @interlibrary_loan.transaction_date %>
+</p>
+
+<%= link_to 'Edit', edit_interlibrary_loan_path(@interlibrary_loan) %> |
+<%= link_to 'Back', interlibrary_loans_path %>

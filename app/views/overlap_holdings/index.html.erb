@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Overlap Holdings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Oclc number</th>
+      <th>Shared by</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @overlap_holdings.each do |overlap_holding| %>
+      <tr>
+        <td><%= overlap_holding.oclc_number %></td>
+        <td><%= overlap_holding.shared_by %></td>
+        <td><%= overlap_holding.overlap_group.name %></td>
+        <td><%= link_to 'Show', overlap_holding %></td>
+        <td><%= link_to 'Edit', edit_overlap_holding_path(overlap_holding) %></td>
+        <td><%= link_to 'Destroy', overlap_holding, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Overlap holding', new_overlap_holding_path %>

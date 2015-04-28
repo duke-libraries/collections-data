@@ -1,0 +1,29 @@
+<%= form_for(@interlibrary_loan) do |f| %>
+  <% if @interlibrary_loan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@interlibrary_loan.errors.count, "error") %> prohibited this interlibrary_loan from being saved:</h2>
+
+      <ul>
+      <% @interlibrary_loan.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :oclc_number %><br>
+    <%= f.number_field :oclc_number %>
+  </div>
+  <div class="field">
+    <%= f.label :request_type %><br>
+    <%= f.text_field :request_type %>
+  </div>
+  <div class="field">
+    <%= f.label :transaction_date %><br>
+    <%= f.datetime_select :transaction_date %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

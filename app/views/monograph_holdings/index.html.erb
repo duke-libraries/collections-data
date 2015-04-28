@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Monograph Holdings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Oclc number</th>
+      <th>Lc number</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Publisher</th>
+      <th>Price</th>
+      <th>Acquisition modality</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @monograph_holdings.each do |monograph_holding| %>
+      <tr>
+        <td><%= monograph_holding.oclc_number %></td>
+        <td><%= monograph_holding.lc_number %></td>
+        <td><%= monograph_holding.title %></td>
+        <td><%= monograph_holding.author %></td>
+        <td><%= monograph_holding.publisher %></td>
+        <td><%= monograph_holding.price %></td>
+        <td><%= monograph_holding.acquisition_modality %></td>
+        <td><%= link_to 'Show', monograph_holding %></td>
+        <td><%= link_to 'Edit', edit_monograph_holding_path(monograph_holding) %></td>
+        <td><%= link_to 'Destroy', monograph_holding, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Monograph holding', new_monograph_holding_path %>

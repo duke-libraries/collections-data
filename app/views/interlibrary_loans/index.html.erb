@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Interlibrary Loans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Oclc number</th>
+      <th>Request type</th>
+      <th>Transaction date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @interlibrary_loans.each do |interlibrary_loan| %>
+      <tr>
+        <td><%= interlibrary_loan.oclc_number %></td>
+        <td><%= interlibrary_loan.request_type %></td>
+        <td><%= interlibrary_loan.transaction_date %></td>
+        <td><%= link_to 'Show', interlibrary_loan %></td>
+        <td><%= link_to 'Edit', edit_interlibrary_loan_path(interlibrary_loan) %></td>
+        <td><%= link_to 'Destroy', interlibrary_loan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Interlibrary loan', new_interlibrary_loan_path %>
