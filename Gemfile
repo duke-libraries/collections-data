@@ -33,6 +33,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 gem 'smarter_csv', '~> 1.0.19'
+gem 'histogram', '~> 0.2.2.0'
+gem 'highcharts-rails', '~> 3.0.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

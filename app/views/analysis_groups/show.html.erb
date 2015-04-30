@@ -4,20 +4,21 @@
   <strong>Analysis Group:</strong>
   <%= @analysis_group.name %>
 </p>
-  <table>
-    <tr>
-      <th>OCLC Number</th>
-      <th>Interlibrary Loan Count</th>
-      <th>Overlap Group 1</th>
-    </tr>
-    <%- @analysis_group.monograph_holdings.each do |holding| %>
-    <tr>
-      <td><%= holding.oclc_number %></td>
-      <td><%= holding.interlibrary_loan_count %></td>
-      <td><%= holding.overlap_holdings_count %></td>
-    </tr>
-    <%- end %>
-  </table>
+<h2>Overlap Holdings for <%= @analysis_group.name %></h2>
+<%= content_tag "div", id: "analysis-group-overlap-data", data: {xaxis: @overlap_histogram[0], yaxis: @overlap_histogram[1]} do %>
+  <div id="analysis-group-overlap-chart" style="width:50%; height:400px;"></div>
+<% end %>
+
+<!-- all-overlap-data -->
+<h2>Overlap Holdings for complete collection</h2>
+<%= content_tag "div", id: "all-overlap-data", data: {xaxis: @overlap_histogram_overall[0], yaxis: @overlap_histogram_overall[1]} do %>
+  <div id="all-overlap-chart" style="width:50%; height:400px;"></div>
+<% end %>
+
+</div>
+
+<p><%= @interlibrary_loans_histogram %></p>
+<p><%= @interlibrary_loans_histogram_overall %></p>
 
 <%= link_to 'Edit', edit_analysis_group_path(@analysis_group) %> |
 <%= link_to 'Back', analysis_groups_path %>

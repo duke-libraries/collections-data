@@ -1,7 +1,7 @@
 class MonographHolding < ActiveRecord::Base
   has_and_belongs_to_many :analysis_groups
 
-  def interlibrary_loan_count
+  def interlibrary_loans_count
     InterlibraryLoan.where(oclc_number: self.oclc_number).count
   end
 

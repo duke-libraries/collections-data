@@ -1,4 +1,7 @@
 class AnalysisGroupsController < ApplicationController
+  
+  require 'histogram/array' 
+
   before_action :set_analysis_group, only: [:show, :edit, :update, :destroy]
 
   # GET /analysis_groups
@@ -10,6 +13,21 @@ class AnalysisGroupsController < ApplicationController
   # GET /analysis_groups/1
   # GET /analysis_groups/1.json
   def show
+    overlap = []
+    interlibrary_loans = []
+    @analysis_group.monograph_holdings.each do |holding|
+      overlap << holding.overlap_holdings_count
+      interlibrary_loans << holding.interlibrary_loans_count
+    end
+
+    overlap_overall = OverlapHolding.pluck(:shared_by)
+    interlibrary_loans_overall = InterlibraryLoan.group(:oclc_number).count.values
+
+    @overlap_histogram = overlap.histogram(20, :min => 0, :max => 2685)
+    @overlap_histogram_overall = overlap_overall.histogram(20, :min => 0, :max => 2685)
+
+    @interlibrary_loans_histogram = interlibrary_loans.histogram(20, :min => 0, :max => 61)
+    @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram(20, :min => 0, :max => 61)
   end
 
   # GET /analysis_groups/new
