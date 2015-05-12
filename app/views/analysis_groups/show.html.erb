@@ -1,24 +1,45 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Analysis Group:</strong>
-  <%= @analysis_group.name %>
-</p>
-<h2>Overlap Holdings for <%= @analysis_group.name %></h2>
-<%= content_tag "div", id: "analysis-group-overlap-data", data: {xaxis: @overlap_histogram[0], yaxis: @overlap_histogram[1]} do %>
-  <div id="analysis-group-overlap-chart" style="width:50%; height:400px;"></div>
-<% end %>
-
-<!-- all-overlap-data -->
-<h2>Overlap Holdings for complete collection</h2>
-<%= content_tag "div", id: "all-overlap-data", data: {xaxis: @overlap_histogram_overall[0], yaxis: @overlap_histogram_overall[1]} do %>
-  <div id="all-overlap-chart" style="width:50%; height:400px;"></div>
-<% end %>
-
+<div class="row">
+  <div class="small-12 columns">
+    <p id="notice"><%= notice %></p>
+    <h1>Analysis Group: <%= @analysis_group.name %></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+    <h2>Overlap Holdings Group 1</h2>
+  </div>
+  <%= render partial: "analysis", locals: {chart_data_id: "analysis-group-overlap-data-1", xaxis_values: @overlap1_histogram[0], yaxis_values: @overlap1_histogram[1], chart_id: "analysis-group-overlap-chart-1", values: @overlap1_desc } %>
+  <%= render partial: "analysis", locals: {chart_data_id: "all-overlap-data-1", xaxis_values: @overlap_histogram_overall[0], yaxis_values: @overlap_histogram_overall[1], chart_id: "all-overlap-chart-1", values: @overlap_overall_desc } %>
 </div>
 
-<p><%= @interlibrary_loans_histogram %></p>
-<p><%= @interlibrary_loans_histogram_overall %></p>
+<div class="row">
+  <div class="small-12 columns">
+    <h2>Overlap Holdings Group 2</h2>
+  </div>
+  <%= render partial: "analysis", locals: {chart_data_id: "analysis-group-overlap-data-2", xaxis_values: @overlap2_histogram[0], yaxis_values: @overlap2_histogram[1], chart_id: "analysis-group-overlap-chart-2", values: @overlap2_desc } %>
+  <%= render partial: "analysis", locals: {chart_data_id: "all-overlap-data-2", xaxis_values: @overlap_histogram_overall[0], yaxis_values: @overlap_histogram_overall[1], chart_id: "all-overlap-chart-2", values: @overlap_overall_desc } %>
+</div>
+</div>
+
+
+<div class="row">
+  <div class="small-12 columns">
+    <h2>Interlibrary Loans</h2>
+  </div>
+  <%= render partial: "analysis", locals: {chart_data_id: "analysis-group-interlibrary-loan-data", xaxis_values: @interlibrary_loans_histogram[0], yaxis_values: @interlibrary_loans_histogram[1], chart_id: "analysis-group-interlibrary-loan-chart", values: @interlibrary_loans_desc } %>
+
+  <%= render partial: "analysis", locals: {chart_data_id: "all-interlibrary-loan-data", xaxis_values: @interlibrary_loans_histogram_overall[0], yaxis_values: @interlibrary_loans_histogram_overall[1], chart_id: "all-interlibrary-loan-chart", values: @interlibrary_loans_overall_desc } %>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <h2>Circulation</h2>
+  </div>
+  <%= render partial: "analysis", locals: {chart_data_id: "analysis-group-circulation-data", xaxis_values: @circulation_histogram[0], yaxis_values: @circulation_histogram[1], chart_id: "analysis-group-circulation-chart", values: @circulations_desc } %>
+
+  <%= render partial: "analysis", locals: {chart_data_id: "all-circulation-data", xaxis_values: @circulation_histogram_overall[0], yaxis_values: @circulation_histogram_overall[1], chart_id: "all-circulation-chart", values: @circulations_overall_desc } %>
+</div>
 
 <%= link_to 'Edit', edit_analysis_group_path(@analysis_group) %> |
 <%= link_to 'Back', analysis_groups_path %>
+

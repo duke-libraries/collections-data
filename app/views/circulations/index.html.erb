@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Circulations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Oclc number</th>
+      <th>Loan date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @circulations.each do |circulation| %>
+      <tr>
+        <td><%= circulation.oclc_number %></td>
+        <td><%= circulation.loan_date %></td>
+        <td><%= link_to 'Show', circulation %></td>
+        <td><%= link_to 'Edit', edit_circulation_path(circulation) %></td>
+        <td><%= link_to 'Destroy', circulation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Circulation', new_circulation_path %>

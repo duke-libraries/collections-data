@@ -35,6 +35,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'smarter_csv', '~> 1.0.19'
 gem 'histogram', '~> 0.2.2.0'
 gem 'highcharts-rails', '~> 3.0.0'
+gem 'foundation-rails', '~> 5.5.1.2'
+gem 'descriptive-statistics'
+
+group :development do
+  gem 'guard'
+  gem 'guard-livereload'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

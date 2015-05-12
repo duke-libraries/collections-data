@@ -13,21 +13,54 @@ class AnalysisGroupsController < ApplicationController
   # GET /analysis_groups/1
   # GET /analysis_groups/1.json
   def show
-    overlap = []
+    overlap1 = []
+    overlap2 = []
     interlibrary_loans = []
+    circulations = []
     @analysis_group.monograph_holdings.each do |holding|
-      overlap << holding.overlap_holdings_count
+      overlap1 << holding.overlap_holdings_count(1)
+      overlap2 << holding.overlap_holdings_count(2)
       interlibrary_loans << holding.interlibrary_loans_count
+      circulations << holding.circulation_count
     end
 
     overlap_overall = OverlapHolding.pluck(:shared_by)
     interlibrary_loans_overall = InterlibraryLoan.group(:oclc_number).count.values
+    circulations_overall = Circulation.group(:oclc_number).count.values
 
-    @overlap_histogram = overlap.histogram(20, :min => 0, :max => 2685)
-    @overlap_histogram_overall = overlap_overall.histogram(20, :min => 0, :max => 2685)
 
-    @interlibrary_loans_histogram = interlibrary_loans.histogram(20, :min => 0, :max => 61)
-    @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram(20, :min => 0, :max => 61)
+    max = overlap1.max > overlap_overall.max ? overlap1.max : overlap_overall.max
+    max = overlap2.max > max ? overlap2.max : max
+
+    # @overlap1_histogram = overlap1.histogram(100, :min => 0, :max => max)
+    # @overlap2_histogram = overlap2.histogram(100, :min => 0, :max => max)
+    # @overlap_histogram_overall = overlap_overall.histogram(100, :min => 0, :max => max)
+
+    # @interlibrary_loans_histogram = interlibrary_loans.histogram(40, :min => 0, :max => 61)
+    # @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram(40, :min => 0, :max => 61)
+
+    # @circulation_histogram = circulations.histogram(100, :min => 0, :max => 40)
+    # @circulation_histogram_overall = circulations_overall.histogram(100, :min => 0, :max => 1075)
+
+    @overlap1_histogram = overlap1.histogram(:sturges)
+    @overlap2_histogram = overlap2.histogram(:sturges)
+    @overlap_histogram_overall = overlap_overall.histogram(:sturges)
+
+    @interlibrary_loans_histogram = interlibrary_loans.histogram(:sturges)
+    @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram(:sturges)
+
+    @circulation_histogram = circulations.histogram(:sturges)
+    @circulation_histogram_overall = circulations_overall.histogram(:sturges)
+
+    @overlap1_desc = DescriptiveStatistics::Stats.new(overlap1)
+    @overlap2_desc = DescriptiveStatistics::Stats.new(overlap2)
+    @interlibrary_loans_desc = DescriptiveStatistics::Stats.new(interlibrary_loans)
+    @circulations_desc = DescriptiveStatistics::Stats.new(circulations)
+
+    @overlap_overall_desc = DescriptiveStatistics::Stats.new(overlap_overall)
+    @interlibrary_loans_overall_desc = DescriptiveStatistics::Stats.new(interlibrary_loans_overall)
+    @circulations_overall_desc = DescriptiveStatistics::Stats.new(circulations_overall)
+
   end
 
   # GET /analysis_groups/new

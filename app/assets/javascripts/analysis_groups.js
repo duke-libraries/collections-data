@@ -4,9 +4,6 @@ $(document).ready(function() {
         chart: {
             type: 'column'
         },
-        title: {
-            text: 'Overlap Histogram'
-        },
         yAxis: {
             title: {
                 text: 'Count'
@@ -20,13 +17,16 @@ $(document).ready(function() {
         return values;
     }
 
-    function set_data(element_id) {
+    function set_data(element_id, title) {
         var xaxis = get_values(element_id, 'xaxis');
         var yaxis = get_values(element_id, 'yaxis');
 
         var data = {
             xAxis: {
                 categories: xaxis
+            },
+            title: {
+                text: title
             },
             series: [{
                 name: 'Overlap',
@@ -35,17 +35,38 @@ $(document).ready(function() {
         };
         return data;
     }
-
-    var data1 = set_data('analysis-group-overlap-data');
-    var data2 = set_data('all-overlap-data');
         
 
-    $('#analysis-group-overlap-chart').highcharts(
-        $.extend(baseConfig, data1)
+    $('#analysis-group-overlap-chart-1').highcharts(
+        $.extend(baseConfig, set_data('analysis-group-overlap-data-1', 'Analysis Group'))
+    );
+
+    $('#analysis-group-overlap-chart-2').highcharts(
+        $.extend(baseConfig, set_data('analysis-group-overlap-data-2', 'Analysis Group'))
     );
     
-    $('#all-overlap-chart').highcharts(
-        $.extend(baseConfig, data2)
+    $('#all-overlap-chart-1').highcharts(
+        $.extend(baseConfig, set_data('all-overlap-data-1', 'All Records'))
+    );
+
+    $('#all-overlap-chart-2').highcharts(
+        $.extend(baseConfig, set_data('all-overlap-data-2', 'All Records'))
+    );
+
+    $('#analysis-group-interlibrary-loan-data').highcharts(
+        $.extend(baseConfig, set_data('analysis-group-interlibrary-loan-data', 'Analysis Group'))
     );
     
+    $('#all-interlibrary-loan-data').highcharts(
+        $.extend(baseConfig, set_data('all-interlibrary-loan-data', 'All Records'))
+    );
+
+    $('#analysis-group-circulation-data').highcharts(
+        $.extend(baseConfig, set_data('analysis-group-circulation-data', 'Analysis Group'))
+    );
+
+    $('#all-circulation-data').highcharts(
+        $.extend(baseConfig, set_data('all-circulation-data', 'All Records'))
+    );
+
 });

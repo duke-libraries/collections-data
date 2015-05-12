@@ -5,7 +5,17 @@ class MonographHolding < ActiveRecord::Base
     InterlibraryLoan.where(oclc_number: self.oclc_number).count
   end
 
-  def overlap_holdings_count
-    OverlapHolding.where(oclc_number: self.oclc_number).where(overlap_group_id: 1).first.shared_by
+  def overlap_holdings_count(overlap_group_id)
+    overlap_holdings = OverlapHolding.where(oclc_number: self.oclc_number).where(overlap_group_id: overlap_group_id).first
+    if overlap_holdings.nil?
+      overlap_holdings = 0
+    else
+      overlap_holdings = overlap_holdings.shared_by
+    end
   end
+
+  def circulation_count
+    Circulation.where(oclc_number: self.oclc_number).count
+  end
+
 end

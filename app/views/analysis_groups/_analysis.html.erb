@@ -1,0 +1,21 @@
+<div class="small-12 medium-10 columns">
+    <%= content_tag "div", id: chart_data_id, data: {xaxis: xaxis_values, yaxis: yaxis_values} do %>
+      <%= content_tag "div", id: chart_id, style: "width: 100%; height: 400px" do %><% end %>
+    <% end %>
+</div>
+<div class="small-12 medium-2 columns">
+    <table>
+      <tr>
+        <td>Mean</td>
+        <td><%= values.mean.round %></td>
+      </tr>
+      <tr>
+        <td>Median</td>
+        <td><%= values.median.round %></td>
+      </tr>
+      <tr>
+        <td>Mode</td>
+        <td><%= values.mode.round %></td>
+      </tr>
+    </table>
+</div>

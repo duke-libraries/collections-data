@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :circulations
   resources :monograph_holdings
   resources :analysis_groups
   resources :interlibrary_loans
