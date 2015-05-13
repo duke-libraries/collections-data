@@ -3,6 +3,7 @@ class AnalysisGroupsController < ApplicationController
   require 'histogram/array' 
 
   before_action :set_analysis_group, only: [:show, :edit, :update, :destroy]
+  #before_action :zero_circulations, only: [:show]
 
   # GET /analysis_groups
   # GET /analysis_groups.json
@@ -25,32 +26,26 @@ class AnalysisGroupsController < ApplicationController
     end
 
     overlap_overall = OverlapHolding.pluck(:shared_by)
-    interlibrary_loans_overall = InterlibraryLoan.group(:oclc_number).count.values
-    circulations_overall = Circulation.group(:oclc_number).count.values
 
+    interlibrary_loans_overall = InterlibraryLoan.group(:oclc_number).count.values
+    interlibrary_loans_overall.concat(zero_interlibrary_loans)
+
+    circulations_overall = Circulation.group(:oclc_number).count.values
+    circulations_overall.concat(zero_circulations)
 
     max = overlap1.max > overlap_overall.max ? overlap1.max : overlap_overall.max
     max = overlap2.max > max ? overlap2.max : max
 
-    # @overlap1_histogram = overlap1.histogram(100, :min => 0, :max => max)
-    # @overlap2_histogram = overlap2.histogram(100, :min => 0, :max => max)
-    # @overlap_histogram_overall = overlap_overall.histogram(100, :min => 0, :max => max)
+    @overlap1_histogram = overlap1.histogram(10, :min => 0, :max => max)
+    @overlap2_histogram = overlap2.histogram(10, :min => 0, :max => max)
+    @overlap_histogram_overall = overlap_overall.histogram(10, :min => 0, :max => max)
 
-    # @interlibrary_loans_histogram = interlibrary_loans.histogram(40, :min => 0, :max => 61)
-    # @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram(40, :min => 0, :max => 61)
+    @interlibrary_loans_histogram = interlibrary_loans.histogram(10, :min => 0, :max => 61)
+    @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram(10, :min => 0, :max => 61)
 
-    # @circulation_histogram = circulations.histogram(100, :min => 0, :max => 40)
-    # @circulation_histogram_overall = circulations_overall.histogram(100, :min => 0, :max => 1075)
+    @circulation_histogram = circulations.histogram(10, :min => 0, :max => 40)
+    @circulation_histogram_overall = circulations_overall.histogram(10, :min => 0, :max => 1300)
 
-    @overlap1_histogram = overlap1.histogram(:sturges)
-    @overlap2_histogram = overlap2.histogram(:sturges)
-    @overlap_histogram_overall = overlap_overall.histogram(:sturges)
-
-    @interlibrary_loans_histogram = interlibrary_loans.histogram(:sturges)
-    @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram(:sturges)
-
-    @circulation_histogram = circulations.histogram(:sturges)
-    @circulation_histogram_overall = circulations_overall.histogram(:sturges)
 
     @overlap1_desc = DescriptiveStatistics::Stats.new(overlap1)
     @overlap2_desc = DescriptiveStatistics::Stats.new(overlap2)
@@ -121,5 +116,15 @@ class AnalysisGroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def analysis_group_params
       params.require(:analysis_group).permit(:name)
+    end
+
+    def zero_circulations
+      zero_count = MonographHolding.joins('left outer join circulations on monograph_holdings.oclc_number=circulations.oclc_number').select('monograph_holdings.*,circulations.oclc_number').where('circulations.oclc_number is null').pluck(:oclc_number).count
+      Array.new(zero_count, 0)
+    end
+
+    def zero_interlibrary_loans
+      zero_count = MonographHolding.joins('left outer join interlibrary_loans on monograph_holdings.oclc_number=interlibrary_loans.oclc_number').select('monograph_holdings.*,interlibrary_loans.oclc_number').where('interlibrary_loans.oclc_number is null').pluck(:oclc_number).count
+      Array.new(zero_count, 0)
     end
 end
