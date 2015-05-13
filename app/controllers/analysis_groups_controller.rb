@@ -28,23 +28,33 @@ class AnalysisGroupsController < ApplicationController
     overlap_overall = OverlapHolding.pluck(:shared_by)
 
     interlibrary_loans_overall = InterlibraryLoan.group(:oclc_number).count.values
-    interlibrary_loans_overall.concat(zero_interlibrary_loans)
+    interlibrary_loans_overall.concat(Array.new(zero_interlibrary_loans, 0))
 
     circulations_overall = Circulation.group(:oclc_number).count.values
-    circulations_overall.concat(zero_circulations)
+    circulations_overall.concat(Array.new(zero_circulations, 0))
 
     max = overlap1.max > overlap_overall.max ? overlap1.max : overlap_overall.max
     max = overlap2.max > max ? overlap2.max : max
 
-    @overlap1_histogram = overlap1.histogram(10, :min => 0, :max => max)
-    @overlap2_histogram = overlap2.histogram(10, :min => 0, :max => max)
-    @overlap_histogram_overall = overlap_overall.histogram(10, :min => 0, :max => max)
+    # @overlap1_histogram = overlap1.histogram(10, :min => 0, :max => max)
+    # @overlap2_histogram = overlap2.histogram(10, :min => 0, :max => max)
+    # @overlap_histogram_overall = overlap_overall.histogram(10, :min => 0, :max => max)
 
-    @interlibrary_loans_histogram = interlibrary_loans.histogram(10, :min => 0, :max => 61)
-    @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram(10, :min => 0, :max => 61)
+    # @interlibrary_loans_histogram = interlibrary_loans.histogram(10, :min => 0, :max => 61)
+    # @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram(10, :min => 0, :max => 61)
 
-    @circulation_histogram = circulations.histogram(10, :min => 0, :max => 40)
-    @circulation_histogram_overall = circulations_overall.histogram(10, :min => 0, :max => 1300)
+    # @circulation_histogram = circulations.histogram(10, :min => 0, :max => 40)
+    # @circulation_histogram_overall = circulations_overall.histogram(10, :min => 0, :max => 1300)
+
+    @overlap1_histogram = overlap1.histogram()
+    @overlap2_histogram = overlap2.histogram()
+    @overlap_histogram_overall = overlap_overall.histogram()
+
+    @interlibrary_loans_histogram = interlibrary_loans.histogram()
+    @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram()
+
+    @circulation_histogram = circulations.histogram()
+    @circulation_histogram_overall = circulations_overall.histogram()
 
 
     @overlap1_desc = DescriptiveStatistics::Stats.new(overlap1)
@@ -55,6 +65,16 @@ class AnalysisGroupsController < ApplicationController
     @overlap_overall_desc = DescriptiveStatistics::Stats.new(overlap_overall)
     @interlibrary_loans_overall_desc = DescriptiveStatistics::Stats.new(interlibrary_loans_overall)
     @circulations_overall_desc = DescriptiveStatistics::Stats.new(circulations_overall)
+
+    
+    @interlibrary_loan_items_overall_count = InterlibraryLoan.where(request_type: "Loan").distinct.count(:oclc_number) + zero_interlibrary_loans
+    @interlibrary_loan_overall_count = InterlibraryLoan.where(request_type: "Loan").count
+    @interlibrary_loan_overall_velocity = (@interlibrary_loan_overall_count / @interlibrary_loan_items_overall_count.to_f).round(1)
+
+    @interlibrary_loan_items_count = interlibrary_loans.count
+    @interlibrary_loan_count = interlibrary_loans.sum
+    @interlibrary_loan_velocity = (@interlibrary_loan_count / @interlibrary_loan_count.to_f).round(1)
+
 
   end
 
@@ -120,11 +140,9 @@ class AnalysisGroupsController < ApplicationController
 
     def zero_circulations
       zero_count = MonographHolding.joins('left outer join circulations on monograph_holdings.oclc_number=circulations.oclc_number').select('monograph_holdings.*,circulations.oclc_number').where('circulations.oclc_number is null').pluck(:oclc_number).count
-      Array.new(zero_count, 0)
     end
 
     def zero_interlibrary_loans
       zero_count = MonographHolding.joins('left outer join interlibrary_loans on monograph_holdings.oclc_number=interlibrary_loans.oclc_number').select('monograph_holdings.*,interlibrary_loans.oclc_number').where('interlibrary_loans.oclc_number is null').pluck(:oclc_number).count
-      Array.new(zero_count, 0)
     end
 end
