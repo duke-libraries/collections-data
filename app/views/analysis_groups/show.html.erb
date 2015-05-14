@@ -9,116 +9,86 @@
     <table>
       <tr>
         <td></td>
-        <th colspan="6">Interlibrary Loan</th>
-        <th colspan="4">Circulation</th>
-        <th colspan="4">Overlap 1</th>
-        <th colspan="4">Overlap 2</th>
+        <th colspan="5">Interlibrary Loan</th>
+        <th colspan="5">Circulation</th>
+        <th colspan="5">Overlap 1</th>
+        <th colspan="5">Overlap 2</th>
       </tr>
       <tr>
         <td></td>
         <td>Total Items</td>
         <td>Total Loans</td>
-        <td>Loans/Items</td>
         <td>Mean</td>
         <td>Median</td>
         <td>Mode</td>
-        <td>Total</td>
+        <td>Total Items</td>
+        <td>Total Circulations</td>
         <td>Mean</td>
         <td>Median</td>
         <td>Mode</td>
-        <td>Total</td>
+        <td>Total Items</td>
+        <td>Total Overlaps</td>
         <td>Mean</td>
         <td>Median</td>
         <td>Mode</td>
-        <td>Total</td>
+        <td>Total Items</td>
+        <td>Total Overlaps</td>
         <td>Mean</td>
         <td>Median</td>
         <td>Mode</td>
       </tr>
       <tr>
         <td>Analysis Group</td>
-        <td><%= @interlibrary_loan_items_count %></td>
-        <td><%= @interlibrary_loan_count %></td>
-        <td><%= @interlibrary_loan_velocity %></td>
-        <td><%= @interlibrary_loans_desc.mean.round %></td>
-        <td><%= @interlibrary_loans_desc.median.round %></td>
-        <td><%= @interlibrary_loans_desc.mode.round %></td>
-        <td></td>
-        <td><%= @circulations_desc.mean.round %></td>
-        <td><%= @circulations_desc.median.round %></td>
-        <td><%= @circulations_desc.mode.round %></td>
-        <td></td>
-        <td><%= @overlap1_desc.mean.round %></td>
-        <td><%= @overlap1_desc.median.round %></td>
-        <td><%= @overlap1_desc.mode.round %></td>
-        <td></td>
-        <td><%= @overlap2_desc.mean.round %></td>
-        <td><%= @overlap2_desc.median.round %></td>
-        <td><%= @overlap2_desc.mode.round %></td>
+        <td><%= number_with_delimiter(@interlibrary_loan_items_count) %></td>
+        <td><%= number_with_delimiter(@interlibrary_loan_count) %></td>
+        <td><%= @interlibrary_loans_desc.mean.round(1) %></td>
+        <td><%= @interlibrary_loans_desc.median.round(1) %></td>
+        <td><%= @interlibrary_loans_desc.mode.round(1) %></td>
+        <td><%= number_with_delimiter(@circulation_items_count) %></td>
+        <td><%= number_with_delimiter(@circulation_count) %></td>
+        <td><%= @circulations_desc.mean.round(1) %></td>
+        <td><%= @circulations_desc.median.round(1) %></td>
+        <td><%= @circulations_desc.mode.round(1) %></td>
+        <td><%= number_with_delimiter(@overlap1_item_count) %></td>
+        <td><%= number_with_delimiter(@overlap1_count) %></td>
+        <td><%= @overlap1_desc.mean.round(1) %></td>
+        <td><%= @overlap1_desc.median.round(1) %></td>
+        <td><%= @overlap1_desc.mode.round(1) %></td>
+        <td><%= @overlap2_item_count %></td>
+        <td><%= @overlap2_count %></td>
+        <td><%= @overlap2_desc.mean.round(1) %></td>
+        <td><%= @overlap2_desc.median.round(1) %></td>
+        <td><%= @overlap2_desc.mode.round(1) %></td>
       </tr>
       <tr>
         <td>Universe</td>
-        <td><%= @interlibrary_loan_items_overall_count %></td>
-        <td><%= @interlibrary_loan_overall_count %></td>
-        <td><%= @interlibrary_loan_overall_velocity %></td>
-        <td><%= @interlibrary_loans_overall_desc.mean.round %></td>
-        <td><%= @interlibrary_loans_overall_desc.median.round %></td>
-        <td><%= @interlibrary_loans_overall_desc.mode.round %></td>
-        <td></td>
-        <td><%= @circulations_overall_desc.mean.round %></td>
-        <td><%= @circulations_overall_desc.median.round %></td>
-        <td><%= @circulations_overall_desc.mode.round %></td>
-        <td></td>
-        <td><%= @overlap_overall_desc.mean.round %></td>
-        <td><%= @overlap_overall_desc.median.round %></td>
-        <td><%= @overlap_overall_desc.mode.round %></td>
-        <td></td>
-        <td><%= @overlap_overall_desc.mean.round %></td>
-        <td><%= @overlap_overall_desc.median.round %></td>
-        <td><%= @overlap_overall_desc.mode.round %></td>
+        <td><%= number_with_delimiter(@interlibrary_loan_items_overall_count) %></td>
+        <td><%= number_with_delimiter(@interlibrary_loan_overall_count) %></td>
+        <td><%= @interlibrary_loans_overall_desc.mean.round(1) %></td>
+        <td><%= @interlibrary_loans_overall_desc.median.round(1) %></td>
+        <td><%= @interlibrary_loans_overall_desc.mode.round(1) %></td>
+        <td><%= number_with_delimiter(@circulation_items_overall_count) %></td>
+        <td><%= number_with_delimiter(@circulation_overall_count) %></td>
+        <td><%= @circulations_overall_desc.mean.round(1) %></td>
+        <td><%= @circulations_overall_desc.median.round(1) %></td>
+        <td><%= @circulations_overall_desc.mode.round(1) %></td>
+        <td><%= number_with_delimiter(@overlap_items_overall_count) %></td>
+        <td><%= number_with_delimiter(@overlap_overall_count) %></td>
+        <td><%= @overlap_overall_desc.mean.round(1) %></td>
+        <td><%= @overlap_overall_desc.median.round(1) %></td>
+        <td><%= @overlap_overall_desc.mode.round(1) %></td>
+        <td><%= number_with_delimiter(@overlap_items_overall_count) %></td>
+        <td><%= number_with_delimiter(@overlap_overall_count)  %></td>
+        <td><%= @overlap_overall_desc.mean.round(1) %></td>
+        <td><%= @overlap_overall_desc.median.round(1) %></td>
+        <td><%= @overlap_overall_desc.mode.round(1) %></td>
       </tr>
     </table>
   </div>
 </div>
-
-
-
-<!-- <div class="row">
-  <div class="small-12 columns">
-    <h2>Overlap Holdings Group 1</h2>
-  </div>
-  <%= render partial: "analysis", locals: {chart_data_id: "analysis-group-overlap-data-1", xaxis_values: @overlap1_histogram[0], yaxis_values: @overlap1_histogram[1], chart_id: "analysis-group-overlap-chart-1", values: @overlap1_desc } %>
-  <%= render partial: "analysis", locals: {chart_data_id: "all-overlap-data-1", xaxis_values: @overlap_histogram_overall[0], yaxis_values: @overlap_histogram_overall[1], chart_id: "all-overlap-chart-1", values: @overlap_overall_desc } %>
-</div>
-
 <div class="row">
-  <div class="small-12 columns">
-    <h2>Overlap Holdings Group 2</h2>
+  <div class="small-12">
+    <%= link_to 'Edit', edit_analysis_group_path(@analysis_group) %> |
+    <%= link_to 'Back', analysis_groups_path %>
   </div>
-  <%= render partial: "analysis", locals: {chart_data_id: "analysis-group-overlap-data-2", xaxis_values: @overlap2_histogram[0], yaxis_values: @overlap2_histogram[1], chart_id: "analysis-group-overlap-chart-2", values: @overlap2_desc } %>
-  <%= render partial: "analysis", locals: {chart_data_id: "all-overlap-data-2", xaxis_values: @overlap_histogram_overall[0], yaxis_values: @overlap_histogram_overall[1], chart_id: "all-overlap-chart-2", values: @overlap_overall_desc } %>
 </div>
-</div>
-
-
-<div class="row">
-  <div class="small-12 columns">
-    <h2>Interlibrary Loans</h2>
-  </div>
-  <%= render partial: "analysis", locals: {chart_data_id: "analysis-group-interlibrary-loan-data", xaxis_values: @interlibrary_loans_histogram[0], yaxis_values: @interlibrary_loans_histogram[1], chart_id: "analysis-group-interlibrary-loan-chart", values: @interlibrary_loans_desc } %>
-
-  <%= render partial: "analysis", locals: {chart_data_id: "all-interlibrary-loan-data", xaxis_values: @interlibrary_loans_histogram_overall[0], yaxis_values: @interlibrary_loans_histogram_overall[1], chart_id: "all-interlibrary-loan-chart", values: @interlibrary_loans_overall_desc } %>
-</div>
-
-<div class="row">
-  <div class="small-12 columns">
-    <h2>Circulation</h2>
-  </div>
-  <%= render partial: "analysis", locals: {chart_data_id: "analysis-group-circulation-data", xaxis_values: @circulation_histogram[0], yaxis_values: @circulation_histogram[1], chart_id: "analysis-group-circulation-chart", values: @circulations_desc } %>
-
-  <%= render partial: "analysis", locals: {chart_data_id: "all-circulation-data", xaxis_values: @circulation_histogram_overall[0], yaxis_values: @circulation_histogram_overall[1], chart_id: "all-circulation-chart", values: @circulations_overall_desc } %>
-</div> -->
-
-<%= link_to 'Edit', edit_analysis_group_path(@analysis_group) %> |
-<%= link_to 'Back', analysis_groups_path %>
-

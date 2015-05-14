@@ -25,6 +25,10 @@ class AnalysisGroupsController < ApplicationController
       circulations << holding.circulation_count
     end
 
+    #This isn't quite right. Need distinct OCLC Numbers because there will be overlap
+    #Maybe something like this will work
+    #ActiveRecord::Base.connection.execute("SELECT SUM(shared_by) FROM (SELECT * FROM overlap_holdings GROUP BY oclc_number)")
+
     overlap_overall = OverlapHolding.pluck(:shared_by)
 
     interlibrary_loans_overall = InterlibraryLoan.group(:oclc_number).count.values
@@ -33,8 +37,8 @@ class AnalysisGroupsController < ApplicationController
     circulations_overall = Circulation.group(:oclc_number).count.values
     circulations_overall.concat(Array.new(zero_circulations, 0))
 
-    max = overlap1.max > overlap_overall.max ? overlap1.max : overlap_overall.max
-    max = overlap2.max > max ? overlap2.max : max
+    # max = overlap1.max > overlap_overall.max ? overlap1.max : overlap_overall.max
+    # max = overlap2.max > max ? overlap2.max : max
 
     # @overlap1_histogram = overlap1.histogram(10, :min => 0, :max => max)
     # @overlap2_histogram = overlap2.histogram(10, :min => 0, :max => max)
@@ -46,15 +50,15 @@ class AnalysisGroupsController < ApplicationController
     # @circulation_histogram = circulations.histogram(10, :min => 0, :max => 40)
     # @circulation_histogram_overall = circulations_overall.histogram(10, :min => 0, :max => 1300)
 
-    @overlap1_histogram = overlap1.histogram()
-    @overlap2_histogram = overlap2.histogram()
-    @overlap_histogram_overall = overlap_overall.histogram()
+    # @overlap1_histogram = overlap1.histogram()
+    # @overlap2_histogram = overlap2.histogram()
+    # @overlap_histogram_overall = overlap_overall.histogram()
 
-    @interlibrary_loans_histogram = interlibrary_loans.histogram()
-    @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram()
+    # @interlibrary_loans_histogram = interlibrary_loans.histogram()
+    # @interlibrary_loans_histogram_overall = interlibrary_loans_overall.histogram()
 
-    @circulation_histogram = circulations.histogram()
-    @circulation_histogram_overall = circulations_overall.histogram()
+    # @circulation_histogram = circulations.histogram()
+    # @circulation_histogram_overall = circulations_overall.histogram()
 
 
     @overlap1_desc = DescriptiveStatistics::Stats.new(overlap1)
@@ -67,14 +71,26 @@ class AnalysisGroupsController < ApplicationController
     @circulations_overall_desc = DescriptiveStatistics::Stats.new(circulations_overall)
 
     
-    @interlibrary_loan_items_overall_count = InterlibraryLoan.where(request_type: "Loan").distinct.count(:oclc_number) + zero_interlibrary_loans
-    @interlibrary_loan_overall_count = InterlibraryLoan.where(request_type: "Loan").count
-    @interlibrary_loan_overall_velocity = (@interlibrary_loan_overall_count / @interlibrary_loan_items_overall_count.to_f).round(1)
+    @interlibrary_loan_items_overall_count = InterlibraryLoan.all.distinct.count(:oclc_number) + zero_interlibrary_loans
+    @interlibrary_loan_overall_count = InterlibraryLoan.all.count
 
     @interlibrary_loan_items_count = interlibrary_loans.count
     @interlibrary_loan_count = interlibrary_loans.sum
-    @interlibrary_loan_velocity = (@interlibrary_loan_count / @interlibrary_loan_count.to_f).round(1)
 
+    @circulation_items_overall_count = Circulation.all.distinct.count(:oclc_number) + zero_circulations
+    @circulation_overall_count = Circulation.all.count
+
+    @circulation_items_count = circulations.count
+    @circulation_count = circulations.sum
+
+    @overlap_items_overall_count = OverlapHolding.all.distinct.count(:oclc_number)
+    @overlap_overall_count = ActiveRecord::Base.connection.execute("SELECT SUM(shared_by) FROM (SELECT * FROM overlap_holdings GROUP BY oclc_number)")[0][0]
+
+    @overlap1_item_count = overlap1.count
+    @overlap1_count = overlap1.sum
+
+    @overlap2_item_count = overlap2.count
+    @overlap2_count = overlap2.sum
 
   end
 
