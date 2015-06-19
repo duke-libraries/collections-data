@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508184631) do
+ActiveRecord::Schema.define(version: 20150617200303) do
 
   create_table "analysis_groups", force: :cascade do |t|
     t.string   "name"
@@ -49,15 +49,22 @@ ActiveRecord::Schema.define(version: 20150508184631) do
   end
 
   create_table "monograph_holdings", force: :cascade do |t|
-    t.integer  "oclc_number"
+    t.integer  "oclc_number",          limit: 8
     t.string   "lc_number"
     t.string   "title"
     t.string   "author"
     t.string   "publisher"
     t.float    "price"
     t.string   "acquisition_modality"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.date     "acquisition_date"
+    t.string   "language"
+    t.integer  "publication_date"
+    t.integer  "publication_year"
+    t.string   "sub_library"
+    t.string   "collection"
+    t.string   "material_type"
   end
 
   create_table "overlap_groups", force: :cascade do |t|

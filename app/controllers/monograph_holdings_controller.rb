@@ -4,7 +4,13 @@ class MonographHoldingsController < ApplicationController
   # GET /monograph_holdings
   # GET /monograph_holdings.json
   def index
-    @monograph_holdings = MonographHolding.all
+    @monograph_holdings = MonographHolding.where(nil).page params[:page] # creates an anonymous scope
+    @monograph_holdings = @monograph_holdings.sub_library(params[:sub_library]) if params[:sub_library].present?
+    @monograph_holdings = @monograph_holdings.language(params[:language]) if params[:language].present?
+
+    #@monograph_holdings = @monograph_holdings.where(:sub_library => params[:sub_library].split(",")) if params[:sub_library].present?
+
+    #@monograph_holdings = @monograph_holdings.where(:language => params[:language].split(",")) if params[:language].present?
   end
 
   # GET /monograph_holdings/1

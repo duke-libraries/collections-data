@@ -37,6 +37,7 @@ gem 'histogram', '~> 0.2.2.0'
 gem 'highcharts-rails', '~> 3.0.0'
 gem 'foundation-rails', '~> 5.5.1.2'
 gem 'descriptive-statistics'
+gem 'kaminari'
 
 group :development do
   gem 'guard'
