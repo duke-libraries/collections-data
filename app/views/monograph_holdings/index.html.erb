@@ -1,34 +1,51 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Monograph Holdings</h1>
-  <h2>Collections</h2>
-  <ul>
-  <% @collections.each do |collection| %>
-    <li><%= check_box_tag('collection[]', collection) %>
-    <%= label_tag(collection) %></li>
-  <% end %>
-  </ul>
-  <h2>Sub Libraries</h2>
-  <ul>
-  <% @sub_libraries.each do |sub_library| %>
-    <li><%= check_box_tag('sub_library[]', sub_library) %>
-    <%= label_tag(sub_library) %></li>
-  <% end %>
-  </ul>
-  <h2>Material Types</h2>
-  <ul>
-  <% @material_types.each do |material_type| %>
-    <li><%= check_box_tag('material_type[]', material_type) %>
-    <%= label_tag(material_type) %></li>
-  <% end %>
-  </ul>
-  <h2>Languages</h2>
-  <ul>
-  <% @languages.each do |language| %>
-    <li><%= check_box_tag('language[]', language) %>
-    <%= label_tag(language) %></li>
-  <% end %>
-  </ul>
+<form accept-charset="UTF-8" action="" method="get">
+  <div class="row">
+    <div class="small-12">
+      <%= submit_tag ("Filter") %>
+      <%= text_field_tag("publisher") %>
+      <%= label_tag("Publisher") %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-5 columns">
+      <h2>Collections</h2>
+      <ul>
+      <% @collections.each do |collection| %>
+        <li><%= check_box_tag('collection[]', collection) %>
+        <%= label_tag(collection) %></li>
+      <% end %>
+      </ul>
+    </div>
+    <div class="small-4 columns">
+      <h2>Sub Libraries</h2>
+      <ul>
+      <% @sub_libraries.each do |sub_library| %>
+        <li><%= check_box_tag('sub_library[]', sub_library) %>
+        <%= label_tag(sub_library) %></li>
+      <% end %>
+      </ul>
+      <h2>Material Types</h2>
+      <ul>
+      <% @material_types.each do |material_type| %>
+        <li><%= check_box_tag('material_type[]', material_type) %>
+        <%= label_tag(material_type) %></li>
+      <% end %>
+      </ul>
+    </div>
+    <div class="small-3 columns">
+      <h2>Languages</h2>
+      <ul>
+      <% @languages.each do |language| %>
+        <li><%= check_box_tag('language[]', language) %>
+        <%= label_tag(language) %></li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+</form>
   <table>
   <thead>
     <tr>

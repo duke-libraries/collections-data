@@ -1,6 +1,6 @@
 class MonographHolding < ActiveRecord::Base
 
-  include Filterable
+  # include Filterable
   
   has_and_belongs_to_many :analysis_groups
 
@@ -22,8 +22,8 @@ class MonographHolding < ActiveRecord::Base
   # publisher=boston
   scope :publisher, -> (publisher) { where('publisher LIKE ?', "%#{publisher}%") }
 
-  # publication_year=1998,2014
-  scope :acquisision_date, -> (acquisision_date) { where acquisision_date: acquisision_date.split(",")[0]..acquisision_date.split(",")[1] }
+  # acquisition_date = 1998,2014
+  scope :acquisition_date, -> (acquisition_date) { where acquisition_date: acquisition_date[0]..acquisition_date[1] }
 
 
   def interlibrary_loans_count

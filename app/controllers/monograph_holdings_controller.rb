@@ -5,12 +5,28 @@ class MonographHoldingsController < ApplicationController
   # GET /monograph_holdings.json
   def index
 
-    @monograph_holdings = MonographHolding.filter(params.slice(:sub_library, :language, :material_type, :publication_year, :publisher, :acquisision_date, :collection))
+    @monograph_holdings = MonographHolding.where(nil).page params[:page] # creates an anonymous scope
+    @monograph_holdings = @monograph_holdings.sub_library(params[:sub_library]) if params[:sub_library].present?
+    @monograph_holdings = @monograph_holdings.language(params[:language]) if params[:language].present?
+    @monograph_holdings = @monograph_holdings.collection(params[:collection]) if params[:collection].present?
+    @monograph_holdings = @monograph_holdings.material_type(params[:material_type]) if params[:material_type].present?
+    @monograph_holdings = @monograph_holdings.publication_year(params[:publication_year]) if params[:publication_year].present?
+    @monograph_holdings = @monograph_holdings.acquisition_date(params[:acquisition_date]) if params[:acquisition_date].present?
+    @monograph_holdings = @monograph_holdings.publisher(params[:publisher]) if params[:publisher].present?
 
     @collections = MonographHolding.uniq.pluck(:collection).compact.sort
     @sub_libraries = MonographHolding.uniq.pluck(:sub_library).compact.sort
     @languages = MonographHolding.uniq.pluck(:language).compact.sort
     @material_types = MonographHolding.uniq.pluck(:material_type).compact.sort
+
+    @selected_collections = (params[:collection].present? ? params[:collection] : [])
+    @selected_sub_libraries = (params[:sub_library].present? ? params[:sub_library] : [])
+    @selected_languages = (params[:language].present? ? params[:language] : [])
+    @selected_material_types = (params[:material_type].present? ? params[:material_type] : [])
+    @selected_publication_year = (params[:publication_year].present? ? params[:publication_year] : [])
+    @selected_acquisition_date = (params[:acquisition_date].present? ? params[:acquisition_date] : [])
+    @selected_publisher = (params[:publisher].present? ? params[:publisher] : [])
+
   end
 
   # GET /monograph_holdings/1
